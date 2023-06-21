@@ -1,0 +1,20 @@
+import { DnaryQueue } from '../DataStructures/DnaryQueue';
+
+var test: DnaryQueue<number> = new DnaryQueue();
+test.push(1, 1);
+test.push(3, 3);
+test.push(2, 2);
+test.push(3, 3);
+test.push(4, 4);
+test.push(3, 3);
+test.push(5, 5);
+test.push(2, 2);
+test.push(3, 3);
+test.display(false);
+test.pop();
+test.display(true);
+test.pop();
+test.pop();
+test.pop();
+test.pop();
+test.display(true);
