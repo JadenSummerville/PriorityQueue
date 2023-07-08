@@ -10,7 +10,7 @@ var swap_1 = require("../Tools/swap");
 var DnaryQueue = /** @class */ (function () {
     function DnaryQueue(d, USEPROCESSORS) {
         this.DEBUG = false;
-        this.USEPROCESSORS = true;
+        this.USEPROCESSORS = false;
         if (USEPROCESSORS != undefined) {
             this.USEPROCESSORS = USEPROCESSORS;
         }
@@ -202,6 +202,13 @@ var DnaryQueue = /** @class */ (function () {
     DnaryQueue.prototype.isEmpty = function () {
         this.checkRep;
         return this.size() == 0;
+    };
+    /**
+     * @requires array is not edited. Can be read.
+    */
+    DnaryQueue.prototype.getElements = function () {
+        this.checkRep();
+        return this.items;
     };
     return DnaryQueue;
 }());

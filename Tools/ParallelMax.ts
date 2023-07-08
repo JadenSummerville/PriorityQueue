@@ -24,13 +24,12 @@ let pPromise = async (data, lo, hi, CUTOFF): Promise<{value, place} | null> => {
   }
   return maxRight;
 };
-export async function parallelMax(array: number[], min: number, max: number): Promise<{value, place} | null>{
-    if(max <= min){
-        throw new Error(`Max must be greater than min, but max is ${max} and min
-         is ${min} .`);
-    }
+export async function parallelMax(array: number[], min: number, max: number): Promise<{value: number, place: number} | null>{
     if(!isInteger(max) || !isInteger(min)){
         throw new Error("Max and min must be integers.");
+    }
+    if(max <= min){
+        return null;
     }
     return await pPromise(array, min, max, 1);
 }

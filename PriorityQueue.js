@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PriorityQueue = void 0;
-var CrownList_1 = require("./DataStructures/CrownList");
 var DnaryQueue_1 = require("./DataStructures/DnaryQueue");
 var PriorityQueue = /** @class */ (function () {
     function PriorityQueue(valueFunction, dataStructure) {
@@ -10,7 +9,7 @@ var PriorityQueue = /** @class */ (function () {
             this.dataStructure = dataStructure;
             return;
         }
-        this.dataStructure = new CrownList_1.CrownList();
+        this.dataStructure = new DnaryQueue_1.DnaryQueue(2);
     }
     PriorityQueue.prototype.push = function (value) {
         var priority = this.valueFunction(value);
@@ -31,46 +30,12 @@ var PriorityQueue = /** @class */ (function () {
     PriorityQueue.prototype.isEmpty = function () {
         return this.dataStructure.isEmpty();
     };
+    /**
+     * @requires array is not edited. Can be read.
+    */
+    PriorityQueue.prototype.getElements = function () {
+        return this.dataStructure.getElements();
+    };
     return PriorityQueue;
 }());
 exports.PriorityQueue = PriorityQueue;
-var valueFunction = function (word) {
-    var value;
-    switch (word) {
-        // Top priority
-        case "Scott":
-            value = 100;
-            break;
-        // Me
-        case "Jaden":
-            value = 50;
-            break;
-        // Friends and family
-        case "John":
-        case "Jen":
-        case "Darnel":
-            value = 10;
-            break;
-        // Dogs
-        case "Rocko":
-        case "Percy":
-            value = 5;
-            break;
-        // Not on list
-        default:
-            value = 0;
-    }
-    return value;
-};
-var priorityQueue = new PriorityQueue(valueFunction, new DnaryQueue_1.DnaryQueue(2));
-for(var i = 0; i != 2_000_000; i++){
-priorityQueue.push("Percy");
-priorityQueue.push("Jaden");
-priorityQueue.push("Scott");
-priorityQueue.push("Rocko");
-}
-console.log("a");
-while (!priorityQueue.isEmpty()) {
-    priorityQueue.pop();
-}
-console.log("b");

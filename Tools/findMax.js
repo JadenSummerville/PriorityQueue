@@ -6,11 +6,11 @@ function findMax(data, lo, hi) {
     if (!(0, isInteger_1.isInteger)(lo) || !(0, isInteger_1.isInteger)(hi)) {
         throw new Error("hi and lo must be integers.");
     }
-    if (lo < 0 || hi < 0 || lo >= data.length || hi > data.length) {
-        throw new Error("hi or lo are not in range.");
-    }
     if (lo >= hi) {
         return null;
+    }
+    if (lo < 0 || hi < 0 || lo >= data.length || hi > data.length) {
+        throw new Error("hi or lo are not in range.");
     }
     var max = data[lo];
     var maxPlace = lo;

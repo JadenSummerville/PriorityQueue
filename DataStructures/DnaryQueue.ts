@@ -9,7 +9,7 @@ export class DnaryQueue<T>{
     priority: number[];
     d: number;
     DEBUG: boolean = false;
-    USEPROCESSORS: boolean = true;
+    USEPROCESSORS: boolean = false;
     constructor(d?: number, USEPROCESSORS?: boolean) {
       if(USEPROCESSORS != undefined){
         this.USEPROCESSORS = USEPROCESSORS;
@@ -201,5 +201,12 @@ export class DnaryQueue<T>{
     isEmpty(): boolean{
       this.checkRep;
       return this.size() == 0;
+    }
+    /**
+     * @requires array is not edited. Can be read.
+    */
+    getElements(): T[]{
+      this.checkRep();
+      return this.items;
     }
 }

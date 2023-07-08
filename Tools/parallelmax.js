@@ -74,11 +74,11 @@ function parallelMax(array, min, max) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    if (max <= min) {
-                        throw new Error("Max must be greater than min, but max is ".concat(max, " and min\n         is ").concat(min, " ."));
-                    }
                     if (!(0, isInteger_1.isInteger)(max) || !(0, isInteger_1.isInteger)(min)) {
                         throw new Error("Max and min must be integers.");
+                    }
+                    if (max <= min) {
+                        return [2 /*return*/, null];
                     }
                     return [4 /*yield*/, pPromise(array, min, max, 1)];
                 case 1: return [2 /*return*/, _a.sent()];

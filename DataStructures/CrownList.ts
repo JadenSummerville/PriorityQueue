@@ -1,16 +1,22 @@
+import { parallelMax } from "../Tools/ParallelMax";
 import { assert } from "../Tools/assert";
 import { isInteger } from "../Tools/isInteger";
 import { swap } from "../Tools/swap";
+import { findMax } from "../Tools/findMax";
 
 export class CrownList<T>{
     body: T[];
     bodyPriority: number[];
     sizeOfList: number;
-    DEBUG: boolean = true;
-    constructor(){
+    DEBUG: boolean = false;
+    USEPROCESSORS: boolean = false;
+    constructor(USEPROCESSORS?: boolean){
         this.body = [];
         this.bodyPriority = [];
         this.sizeOfList = 0;
+        if(USEPROCESSORS != undefined){
+            this.USEPROCESSORS = USEPROCESSORS;
+        }
         this.chechRep();
     }
     chechRep(): void{
@@ -57,7 +63,7 @@ export class CrownList<T>{
         swap(this.bodyPriority, 0, this.sizeOfList - 1);
         this.body.pop();
         this.bodyPriority.pop();
-        var max: number = (this.findMax(1, this.sizeOfList - 2) as number);
+        var max: number = (this.findMax(1, this.sizeOfList - 1) as number);
         if(this.bodyPriority[max] > this.bodyPriority[0]){
             swap(this.body, 0, max);
             swap(this.bodyPriority, 0, max);
@@ -78,6 +84,7 @@ export class CrownList<T>{
         return isInteger(place) && place >= 0 && place < this.bodyPriority.length;
     }
     private findMax(lo: number, hi: number): number | null{
+        /*
         if(lo >= hi){
             return null;
         }
@@ -90,7 +97,22 @@ export class CrownList<T>{
           }
         }
         return maxPlace;
-      }
+        */
+        var goal: {value: number, place: number} | null = null;
+        if(this.USEPROCESSORS){
+            var promise: Promise<{value: number; place: number} | null> = parallelMax(this.bodyPriority, lo, hi);
+            const a = async () => {
+                goal = await promise;
+            };
+            a();
+        }else{
+            goal = findMax(this.bodyPriority, lo, hi);
+        }
+        if(goal == null){
+            return null;
+        }
+        return goal.place;
+    }
       peak(){
         this.chechRep();
         var goal = {item: this.body[0],
@@ -111,11 +133,24 @@ export class CrownList<T>{
         });
         console.log("");
       }
+    /**
+     * @requires array is not edited. Can be read.
+    */
+    getElements(): T[]{
+        return this.body;
+    }
 }
-var a = new CrownList<number>();
-a.push(1, 1);
-a.display(true);
-a.push(0, 0);
-a.push(5, 5);
-a.push(2, 2);
-a.display(true);
+//var a = new CrownList<number>(false);
+//for(var i: number = 0; i != 10_000; i++){
+//    a.push(1, 1);
+//}
+//console.log("a")
+//while(!a.isEmpty()){
+//    a.pop();
+//}
+//console.log("b")
+//a.display(true);
+//a.push(0, 0);
+//a.push(5, 5);
+//a.push(2, 2);
+//a.display(true);
